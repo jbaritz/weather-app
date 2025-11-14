@@ -12,29 +12,29 @@ class ApplicationController < ActionController::Base
     error = "" 
     get_coords = HTTParty.get("https://geocoding-api.open-meteo.com/v1/search?name=#{location}&count=10&language=en&format=json")
     if get_coords["results"].present?
-      lat, long = get_coords["results"][0]["latitude"], get_coords["results"][0]["longitude"]
+      latitude, longitude = get_coords["results"][0]["latitude"], get_coords["results"][0]["longitude"]
     else
-      #handle error
+      # TODO: handle error
     end
     #use National Weather Service api to get data endpoint by coordinates
     url = "https://api.weather.gov/points/#{latitude},#{longitude}"
     response = HTTParty.get(url)
     response = JSON.parse(response)
     if response["status"] == 404
-      #return error
+      # TODO: Return error
     end
     forecast_url = response["properties"]["forecast"]
     #get National Weather Service forecast data for location
-    response = HTTParty.get(forecast_url)
-    response = JSON.parse(response)
-    forecast = {}
-    if response["status"] == 404
+    forecast_data = HTTParty.get(forecast_url)
+    forecast_data = JSON.parse(forecast_data)
+    results = {}
+    if forecast_data["status"] == 404
       #TODO handle error
     else
-      forecast_data = response["property"]["periods"][0]
-      forecast["details"] = forecast_data["detailedForecast"]
-      forecast["temp"] = forecast_data["temperature"]
+      current_data = forecast_data["properties"]["periods"][0]
+      results["details"] = current_data["detailedForecast"]
+      results["temp"] = current_data["temperature"]
     end
-    render json: {forecast: forecast, error: error}, status: :ok
+    render json: {forecast: results, error: error}, status: :ok
   end
 end
