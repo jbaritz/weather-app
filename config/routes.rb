@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "application#index"
+  get "get_forecast", to: "application#get_forecast"
   
 end
