@@ -14,6 +14,7 @@ $(document).ready(function(){
   $('#submit').on('click', function(){
     const location = $('#location').val();
      $('#forecast').hide();
+     $('#cached').hide();
      $('#error').hide();
      $('#loading').show();
     $.post('/get_forecast',{location: location}).done(function (resp) {
@@ -23,7 +24,7 @@ $(document).ready(function(){
       } else {
         $('#temp #num').text(resp.forecast.temp);
         $('#details').text(resp.forecast.details);
-        if(resp.cached){ $('#cached').show() }
+        if(resp.cached === true){ $('#cached').show() }
         $('#forecast').show();
       }
     })

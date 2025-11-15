@@ -29,12 +29,8 @@
   padding: 7px;
   width: 250px;
  }
- 
- #forecast{
-  display:none;
- }
 
- #loading{
+ #forecast, #error, #loading, #cached{
   display:none;
  }
 

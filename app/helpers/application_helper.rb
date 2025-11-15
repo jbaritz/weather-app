@@ -6,9 +6,8 @@ module ApplicationHelper
     forecast_url = get_forecast_endpoint(latitude, longitude)
     #get National Weather Service forecast data for location
     current_data = get_forecast_data(forecast_url)
-    results["details"] = current_data["detailedForecast"]
-    results["temp"] = current_data["temperature"]
-    results
+    #return data as array to be mapped to results object
+    [current_data["detailedForecast"], current_data["temperature"]]    
   end
 
   def get_coords(location)
