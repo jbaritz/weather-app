@@ -29,7 +29,15 @@
   padding: 7px;
   width: 250px;
  }
+ 
+ #forecast{
+  display:none;
+ }
 
  #loading{
   display:none;
+ }
+
+ #temp{
+  font-size: 3em;
  }

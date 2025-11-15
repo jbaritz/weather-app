@@ -1,23 +1,26 @@
 module ApplicationHelper
   
-  def get_coords(location_string)
-    latitude, longitude, error
-    coords = HTTParty.get("https://geocoding-api.open-meteo.com/v1/search?name=#{location}&count=1&language=en&format=json")
-    if coords["results"].present?
-      latitude, longitude = coords["results"][0]["latitude"], coords["results"][0]["longitude"]
-    else
-      error = true
-    end
-    latitude, longitude
+  def get_forecast_by_location(location_string)
+    latitude, longitude = get_coords(location_string)
+    #use National Weather Service api to get data endpoint by coordinates
+    forecast_url = get_forecast_endpoint(latitude, longitude)
+    #get National Weather Service forecast data for location
+    current_data = get_forecast_data(forecast_url)
+    results["details"] = current_data["detailedForecast"]
+    results["temp"] = current_data["temperature"]
+    results
   end
 
-  def get_forecast_endpoint(lat,long)
+  def get_coords(location)
+    coords = HTTParty.get("https://geocoding-api.open-meteo.com/v1/search?name=#{location}&count=1&language=en&format=json")
+    latitude, longitude = coords["results"][0]["latitude"], coords["results"][0]["longitude"]
+  end
+
+  def get_forecast_endpoint(latitude, longitude)
     url = "https://api.weather.gov/points/#{latitude},#{longitude}"
     response = HTTParty.get(url)
     response = JSON.parse(response)
     forecast_url = response["properties"]["forecast"]
-  end
-    
   end
 
   def get_forecast_data(forecast_url)
@@ -25,5 +28,5 @@ module ApplicationHelper
     forecast_data = JSON.parse(forecast_data)
     current_data = forecast_data["properties"]["periods"][0] 
   end
-  
+
 end

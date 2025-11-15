@@ -3,26 +3,27 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
 
   def index
-    #just displays the view UI
+    #just displays the UI
   end
 
   def get_forecast
     location = params["location"].strip
-    #use free API to get global coordinates of given location
     results = {}
+    from_cache = true
     error = false
     begin
-      latitude, longitude = get_coords(location)
-      #use National Weather Service api to get data endpoint by coordinates
-      forecast_url = get_forecast_endpoint(latitude, longitude)
-      #get National Weather Service forecast data for location
-      current_data = get_forecast_data(forecast_url)
-      results["details"] = current_data["detailedForecast"]
-      results["temp"] = current_data["temperature"]
+      stored_data = Rails.cache.read(location)
+      if stored_data.present?
+        results = stored_data
+      else
+        from_cache = false
+        results = get_forecast_by_location(location)
+        Rails.cache.write(location, results, expires_in: 30.minutes) if location.to_i != 0  #only cache if location string is a ZIP code
+      end
     rescue => e
       error = true
     end
-    render json: {forecast: results, error: error}, status: :ok
+    render json: {forecast: results, error: error, cached: from_cache}, status: :ok
   end
 
 end

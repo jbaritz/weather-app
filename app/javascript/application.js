@@ -13,12 +13,18 @@ $(document).ready(function(){
 
   $('#submit').on('click', function(){
     const location = $('#location').val();
+     $('#forecast').hide();
+     $('#error').hide();
+     $('#loading').show();
     $.post('/get_forecast',{location: location}).done(function (resp) {
+       $('#loading').hide();
       if(resp.error != ""){
-
+         $('#error').show();
       } else {
-        $('#temp').text(resp.forecast.temp);
+        $('#temp #num').text(resp.forecast.temp);
         $('#details').text(resp.forecast.details);
+        if(resp.cached){ $('#cached').show() }
+        $('#forecast').show();
       }
     })
   })
