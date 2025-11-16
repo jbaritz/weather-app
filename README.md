@@ -1,24 +1,18 @@
-# README
+# Weather App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app retrieves weather data from the National Weather Service API for a given city or ZIP code. The app will return weather data for any given city name or ZIP code in the United States. For an invalid location entry the UI will display an error message.
 
-Things you may want to cover:
+This app requires Ruby version 3.2.6.
 
-* Ruby version
+To launch the app locally: 
+- Make sure you have Ruby set up on your local machine. You can follow this guide to set up Ruby for your OS: https://guides.rubyonrails.org/install_ruby_on_rails.html
 
-* System dependencies
+- Clone this repository
 
-* Configuration
+- Run `bundle install` in project root directory.
 
-* Database creation
+- Run `rails s` to start server
 
-* Database initialization
+- Open localhost:3000/http://127.0.0.1:3000 in browser to access the app UI.
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Simply execute `rspec` in the project root directory to run unit tests.
