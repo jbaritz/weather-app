@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
       #check if data for given location exists in cache and return cache data if present
       stored_data = Rails.cache.read(location_string)
       if stored_data.present?
-        location.details, location.temperature = stored_data["details"], stored_data["temperature"]
+        location.details, location.temperature = stored_data[:details], stored_data[:temperature]
       else
         location.from_cache = false
         location.get_forecast_by_location
