@@ -19,7 +19,7 @@
  }
 
  .weather-box{
-  padding-top: 35px;
+  padding-top: calc(50vh - 200px);
   margin: auto;
   text-align: center;
  }
@@ -32,6 +32,19 @@
 
  #forecast, #error, #loading, #cached{
   display:none;
+  margin-top: 20px;
+ }
+
+ #forecast{
+    padding: 17px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    max-width: 450px;
+    margin: 20px auto 0 auto;
+ }
+
+ #cached{
+  font-size: 0.75em;
  }
 
  #temp{
