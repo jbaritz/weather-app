@@ -8,7 +8,7 @@ RSpec.describe ApplicationController, type: :controller do
         expect(response.status).to eq(200)
         expect(response.content_type).to eq "application/json; charset=utf-8"
         parsed_body = JSON.parse(response.body)
-        expect(parsed_body["forecast"]["temp"]).to be_instance_of(Integer)
+        expect(parsed_body["forecast"]["temperature"]).to be_instance_of(Integer)
       end 
     end
     context 'with valid location: zip code' do
@@ -17,7 +17,7 @@ RSpec.describe ApplicationController, type: :controller do
         expect(response.status).to eq(200)
         expect(response.content_type).to eq "application/json; charset=utf-8"
         parsed_body = JSON.parse(response.body)
-        expect(parsed_body["forecast"]["temp"]).to be_instance_of(Integer)
+        expect(parsed_body["forecast"]["temperature"]).to be_instance_of(Integer)
       end 
     end
     it 'returns error for invalid location string' do
@@ -25,7 +25,7 @@ RSpec.describe ApplicationController, type: :controller do
         expect(response.status).to eq(200)
         expect(response.content_type).to eq "application/json; charset=utf-8"
         parsed_body = JSON.parse(response.body)    
-        expect(parsed_body["error"]).to be true  
+        expect(parsed_body["error"]).to be true 
     end 
     #  context 'with invalid location: zip code' do
     #     it 'retrieves data for 78747 from cache' do 

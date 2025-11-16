@@ -22,9 +22,9 @@ $(document).ready(function(){
       if(resp.error != ""){
          $('#error').show();
       } else {
-        $('#temp #num').text(resp.forecast.temp);
+        $('#temp #num').text(resp.forecast.temperature);
         $('#details').text(resp.forecast.details);
-        if(resp.cached === true){ $('#cached').show() }
+        if(resp.forecast.from_cache === true){ $('#cached').show() }
         $('#forecast').show();
       }
     })
